@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junior Graphic Designer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #4f46e5;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Modal specific styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+            /* ============ Common Modal Styles (copy for each ID) ============ */
+        #adobeModal .modal-content,
+        #sketchModal .modal-content,
+        #canvaModal .modal-content,
+        #htmlcssModal .modal-content,
+        #figmaModal .modal-content,
+        #socialMediaModal .modal-content,
+        #printPrepModal .modal-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 700px;
+            padding: 20px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.4s ease;
+        }
+
+        /* Close Button */
+        #adobeModal .close-button,
+        #sketchModal .close-button,
+        #canvaModal .close-button,
+        #htmlcssModal .close-button,
+        #figmaModal .close-button,
+        #socialMediaModal .close-button,
+        #printPrepModal .close-button {
+            position: relative;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: #ff4757;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        #adobeModal .close-button:hover,
+        #sketchModal .close-button:hover,
+        #canvaModal .close-button:hover,
+        #htmlcssModal .close-button:hover,
+        #figmaModal .close-button:hover,
+        #socialMediaModal .close-button:hover,
+        #printPrepModal .close-button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Headings with Gradient */
+        #adobeModal h3,
+        #sketchModal h3,
+        #canvaModal h3,
+        #htmlcssModal h3,
+        #figmaModal h3,
+        #socialMediaModal h3,
+        #printPrepModal h3 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+            background: linear-gradient(90deg,
+                rgba(131, 58, 180, 1) 0%,
+                rgba(253, 29, 29, 1) 50%,
+                rgba(252, 176, 69, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #adobeModal h3:after,
+        #sketchModal h3:after,
+        #canvaModal h3:after,
+        #htmlcssModal h3:after,
+        #figmaModal h3:after,
+        #socialMediaModal h3:after,
+        #printPrepModal h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg,
+                rgba(131, 58, 180, 1) 0%,
+                rgba(253, 29, 29, 1) 50%,
+                rgba(252, 176, 69, 1) 100%);
+            border-radius: 3px;
+        }
+
+        /* UL Styling */
+        #adobeModal ul,
+        #sketchModal ul,
+        #canvaModal ul,
+        #htmlcssModal ul,
+        #figmaModal ul,
+        #socialMediaModal ul,
+        #printPrepModal ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* LI Styling */
+        #adobeModal li,
+        #sketchModal li,
+        #canvaModal li,
+        #htmlcssModal li,
+        #figmaModal li,
+        #socialMediaModal li,
+        #printPrepModal li {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid #ff4757;
+        }
+        #adobeModal li:hover,
+        #sketchModal li:hover,
+        #canvaModal li:hover,
+        #htmlcssModal li:hover,
+        #figmaModal li:hover,
+        #socialMediaModal li:hover,
+        #printPrepModal li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        #adobeModal li b,
+        #sketchModal li b,
+        #canvaModal li b,
+        #htmlcssModal li b,
+        #figmaModal li b,
+        #socialMediaModal li b,
+        #printPrepModal li b {
+            font-weight: 600;
+            color: #2f3640;
+            margin-right: 5px;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        /* Alternate Border Colors */
+        #adobeModal li:nth-child(even),
+        #sketchModal li:nth-child(even),
+        #canvaModal li:nth-child(even),
+        #htmlcssModal li:nth-child(even),
+        #figmaModal li:nth-child(even),
+        #socialMediaModal li:nth-child(even),
+        #printPrepModal li:nth-child(even) {
+            border-left-color: #3742fa;
+        }
+        #adobeModal li:nth-child(3n),
+        #sketchModal li:nth-child(3n),
+        #canvaModal li:nth-child(3n),
+        #htmlcssModal li:nth-child(3n),
+        #figmaModal li:nth-child(3n),
+        #socialMediaModal li:nth-child(3n),
+        #printPrepModal li:nth-child(3n) {
+            border-left-color: #1dd1a1;
+        }
+        #adobeModal li:nth-child(4n),
+        #sketchModal li:nth-child(4n),
+        #canvaModal li:nth-child(4n),
+        #htmlcssModal li:nth-child(4n),
+        #figmaModal li:nth-child(4n),
+        #socialMediaModal li:nth-child(4n),
+        #printPrepModal li:nth-child(4n) {
+            border-left-color: #ffa502;
+        }
+
+
+
+        /* Add Animation */
+        @keyframes animatetop {
+            from {top: -300px; opacity: 0}
+            to {top: 0; opacity: 1}
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Removed GD logo text -->
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="#home" class="nav-link border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</a>
+                    <a href="#skills" class="nav-link border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Skills</a>
+                    <a href="D:\per\New folder\sub page .html" class="nav-link border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Projects</a>
+                    <a href="#experience" class="nav-link border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Experience</a>
+                    <a href="#contact" class="nav-link border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Hi there, I'm <span class="text-indigo-600">Suraj</span></h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-gray-700 mb-6">Graphic Designer | Video Editor | Social Media Coordinator</h2>
+                    <p class="text-gray-600 mb-8 max-w-lg">
+                        Creative Graphic Designer, Video Editor and Social Media Coordinator 2 years of experience creating engaging visuals across digital, print and social media platforms. Proficient in Adobe Creative Suite, Figma and Canva. Skilled in branding, storytelling and content planning to enhance brand presence and user engagement.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="D:\per\New folder\sub page .html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition">Take a Look</a>
+                        <a href="#contact" class="border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white px-6 py-3 rounded-full font-medium transition">Let’s Connect</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                        <img src="D:\per\New folder\9821bf45-75d1-433f-a38e-0913fca562bb.png" alt="Suraj's Profile Photo" class="w-full h-full object-cover" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Skills Section -->
+    <section id="skills" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Core Skills</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Design Tools -->
+                <div class="skill-card bg-white rounded-xl p-6 shadow-md transition border-l-4 border-indigo-500">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Design Tools</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Adobe Photoshop</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Adobe InDesign</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Adobe Premiere Pro</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Figma</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Sketch</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Canva</li>
+                    </ul>
+                </div>
+                
+                <!-- Design Principles -->
+                <div class="skill-card bg-white rounded-xl p-6 shadow-md transition border-l-4 border-indigo-500">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Design Principles</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Branding & Identity Design</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Visual Storytelling</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Layout & Composition</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Typography</li>
+                    </ul>
+                </div>
+                
+                <!-- Platforms -->
+                <div class="skill-card bg-white rounded-xl p-6 shadow-md transition border-l-4 border-indigo-500">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Platforms</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Social Media Design & Management</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Print Design (brochures, posters, packaging)</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Web Design (basic HTML, CSS & WordPress)</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Brand Collateral</li>
+                    </ul>
+                </div>
+                
+                <!-- Other Skills -->
+                <div class="skill-card bg-white rounded-xl p-6 shadow-md transition border-l-4 border-indigo-500">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Other Skills</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Video Editing</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> SEO Coordination (Guest Blogging & Backlinking)</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Social Media Content Scheduling & Publishing</li>
+                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-indigo-500 mr-2"></i> Creative Problem Solving</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Software Proficiency -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8">Software Proficiency</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                    <!-- Adobe Suite -->
+                    <div class="text-center cursor-pointer" onclick="openModal('adobeModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-red-100 rounded-full">
+                            <i class="fab fa-adobe text-3xl text-red-600"></i>
+                        </div>
+                        <p class="font-medium">Adobe Suite</p>
+                    </div>
+                    <!-- Sketch -->
+                    <div class="text-center cursor-pointer" onclick="openModal('sketchModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-orange-100 rounded-full">
+                            <i class="fas fa-pencil-ruler text-3xl text-orange-600"></i>
+                        </div>
+                        <p class="font-medium">Sketch</p>
+                    </div>
+                    <!-- Canva -->
+                    <div class="text-center cursor-pointer" onclick="openModal('canvaModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-green-100 rounded-full">
+                            <i class="fas fa-paint-brush text-3xl text-green-600"></i>
+                        </div>
+                        <p class="font-medium">Canva</p>
+                    </div>
+                    <!-- HTML & CSS -->
+                    <div class="text-center cursor-pointer" onclick="openModal('htmlcssModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-blue-100 rounded-full">
+                            <i class="fas fa-code text-3xl text-blue-600"></i>
+                        </div>
+                        <p class="font-medium">HTML & CSS</p>
+                    </div>
+                    <!-- Figma -->
+                    <div class="text-center cursor-pointer" onclick="openModal('figmaModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-purple-100 rounded-full">
+                            <i class="fab fa-figma text-3xl text-purple-600"></i>
+                        </div>
+                        <p class="font-medium">Figma</p>
+                    </div>
+                    <!-- Social Media -->
+                    <div class="text-center cursor-pointer" onclick="openModal('socialMediaModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-pink-100 rounded-full">
+                            <i class="fab fa-instagram text-3xl text-pink-600"></i>
+                        </div>
+                        <p class="font-medium">Social Media</p>
+                    </div>
+                    <!-- Print Prep -->
+                    <div class="text-center cursor-pointer" onclick="openModal('printPrepModal')">
+                        <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-yellow-100 rounded-full">
+                            <i class="fas fa-print text-3xl text-yellow-600"></i>
+                        </div>
+                        <p class="font-medium">Print Prep</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Featured Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1: Brand Identity – Golden Age Media -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <div class="h-48 overflow-hidden">
+                        <img src="D:\per\New folder\RC_12_11_NailingBrandIdentity.jpg" alt="Brand Identity for Golden Age Media" class="w-full h-full object-cover transition" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Brand Identity – Golden Age Media</h3>
+                        <p class="text-gray-600 mb-4">Created a consistent and memorable visual identity for Golden Age Media, aligning brand values with modern design principles to drive recognition and audience engagement.</p>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full mr-2">Logo Design</span>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full mr-2">Print Design</span>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Branding</span>
+                    </div>
+                </div>
+                
+                <!-- Project 2: Social Media Coordinator -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <div class="h-48 overflow-hidden">
+                        <img src="D:\per\New folder\images (3).png" alt="Social Media Campaign" class="w-full h-full object-cover transition" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Social Media Coordinator – Golden Age Media</h3>
+                        <p class="text-gray-600 mb-4">Managed social media platforms, creating engaging content and campaigns to grow audience interaction, brand visibility, and website traffic.</p>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full mr-2">Post Scheduling</span>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Content Creation</span>
+                    </div>
+                </div>
+                
+                <!-- Project 3: SEO & Guest Blogging -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <div class="h-48 overflow-hidden">
+                        <img src="D:\per\New folder\Guest_Blogging_a93e2894b3.png" alt="SEO & Guest Blogging" class="w-full h-full object-cover transition" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">SEO & Guest Blogging – Grow By Search</h3>
+                        <p class="text-gray-600 mb-4">Researched high-ranking niche websites and managed content placement to increase website traffic, improve search engine rankings, and strengthen online presence.</p>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full mr-2">Traffic Growth</span>
+                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">SEO</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="D:\per\New folder\sub page .html" class="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium transition">View Full Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Section -->
+    <section id="experience" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Experience & Education</h2>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <!-- Professional Experience -->
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b border-gray-200">Professional Experience</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Job 1: Junior Graphic Designer -->
+                        <div class="pl-6 relative">
+                            <div class="absolute left-0 top-1 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                            <div class="absolute left-2 top-5 bottom-0 w-0.5 bg-gray-300"></div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Junior Graphic Designer</h4>
+                                <p class="text-gray-600">Golden Age Media – 10/2023 – Current</p>
+                                <ul class="mt-2 space-y-2 text-gray-600 list-disc pl-5">
+                                    <li>Assisted in creative direction for campaigns across digital, print, andsocial platforms, contributing to a 25% increase in brand engagement.</li>
+                                    <li>Supported and collaborated with senior designers, gaining hands-on experience in art direction and skills development, which helped improve the team</li>
+                                    <li>Worked closely with marketing, product, and development teams to deliver visually consistent designs and engaging video content that strengthened brand presence.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Job 2: Social Media Coordinator -->
+                        <div class="pl-6 relative">
+                            <div class="absolute left-0 top-1 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                            <div class="absolute left-2 top-5 bottom-0 w-0.5 bg-gray-300"></div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Social Media Coordinator</h4>
+                                <p class="text-gray-600">Golden Age Media – 10/2023 – Current</p>
+                                <ul class="mt-2 space-y-2 text-gray-600 list-disc pl-5">
+                                    <li>Managed day-to-day operations of multiple social media platforms, including content scheduling, post publishing,and video uploads.</li>
+                                    <li>Maintained a consistent posting calendar to ensure timely and brand-aligned content delivery.</li>
+                                    <li>Monitored audience interactions, responding to comments/messages to encourage community engagement.</li>
+                                    <li>Tracked basic performance metrics (reach, engagement, follower growth) and suggested content adjustments for improved results.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Job 3: SEO Coordinator -->
+                        <div class="pl-6 relative">
+                            <div class="absolute left-0 top-1 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                            <div class="absolute left-2 top-5 bottom-0 w-0.5 bg-gray-300"></div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">SEO Coordinator</h4>
+                                <p class="text-gray-600">Grow By Search – 2022 (6 months)</p>
+                                <ul class="mt-2 space-y-2 text-gray-600 list-disc pl-5">
+                                    <li>Researched and identified high-ranking niche websites for backlink opportunities.</li>
+                                    <li>Created and published guest blog posts to drive targeted traffic to the company’s website.</li>
+                                    <li>Optimized blog content for SEO to improve search engine rankings and visibility.</li>
+                                    <li>Coordinated with the content and marketing teams to align blog topics with keyword strategies.</li>
+                                <li>Optimized blog content for SEO to improve search engine rankings and visibility.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Education -->
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b border-gray-200">Education</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Education 1: Bachelor's -->
+                        <div class="pl-6 relative">
+                            <div class="absolute left-0 top-1 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                            <div class="absolute left-2 top-5 bottom-0 w-0.5 bg-gray-300"></div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Bachelor of Computer Applications (BCA) in Computer Graphics</h4>
+                                <p class="text-gray-600">Mahatma Agrasen Himalayan Garhwal University | Uttarakhand</p>
+                                <ul class="mt-2 space-y-2 text-gray-600 list-disc pl-5">
+                                    <li>Gained coding skills in HTML, CSS, and basic programming.</li>
+                                    <li>Completed projects combining IT solutions, coding, and creative design</li>
+                                       <li>Worked on projects combining design and coding</li> 
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Education 2: Master Diploma -->
+                        <div class="pl-6 relative">
+                            <div class="absolute left-0 top-1 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                            <div class="absolute left-2 top-5 bottom-0 w-0.5 bg-gray-300"></div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">Master Diploma in Computer Applications (MDCA) (2021–2023)</h4>
+                                <p class="text-gray-600">Global Institute of IT and Management – Faridabad</p>
+                                <ul class="mt-2 space-y-2 text-gray-600 list-disc pl-5">
+                                    <li>Adobe Creative Suite (Photoshop, InDesign, Premiere Pro,CorelDraw)</li>
+                                    <li>Figma and Sketch</li>
+                                    <li>Basic HTML & CSS</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Education 3: 12th Grade -->
+                         <div class="pl-6 relative">
+                            <div class="absolute left-0 top-1 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                            <div class="absolute left-2 top-5 bottom-0 w-0.5 bg-gray-300"></div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">12th Grade (Senior Secondary) – Completed (2024)</h4>
+                                <p class="text-gray-600">Haryana Open Schooling Board – Haryana, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                <div class="md:w-1/2 bg-indigo-600 p-12">
+                    <h2 class="text-3xl font-bold text-white mb-6">Let’s Create Something Amazing Together</h2>
+                    <p class="text-indigo-100 mb-8">
+                        Have a project in mind or a question about my work? Let’s connect and make it happen!
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-white text-xl mr-4"></i>
+                            <span class="text-indigo-100">suraj244023@gmail.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt text-white text-xl mr-4"></i>
+                            <span class="text-indigo-100">+91 98119 22637</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-white text-xl mr-4"></i>
+                            <span class="text-indigo-100">Faridabad, Haryana, India</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white hover:bg-indigo-700 transition">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/suraj-kumar-sam/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white hover:bg-indigo-700 transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white hover:bg-indigo-700 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white hover:bg-indigo-700 transition">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 p-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Your Idea, My Design — Let’s Talk</h3>
+                   
+
+                    <form id="contactForm" action="https://formspree.io/f/mnnzkqkp" method="POST" class="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
+    <div class="mb-4">
+        <label for="name" class="block text-gray-700 mb-2">What should I call you?</label>
+        <input type="text" name="name" id="name" placeholder="Your Name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+    </div>
+    <div class="mb-4">
+        <label for="email" class="block text-gray-700 mb-2">Best Contact Email</label>
+        <input type="email" name="email" id="email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+    </div>
+    <div class="mb-4">
+        <label for="message" class="block text-gray-700 mb-2">Tell me about your project or idea</label>
+        <textarea name="message" id="message" rows="4" placeholder="Your Message" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+    </div>
+    <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700 transition">Send Message</button>
+</form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-xl font-bold">Suraj Kumar</span>
+                    <p class="text-gray-400 mt-2">Creating impactful visual experiences.</p>
+                
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+                    <a href="sub page .html" class="text-gray-400 hover:text-white transition">Projects</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>Designed & Developed by Suraj Kumar</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals for Software Proficiency Details -->
+
+    <!-- Adobe Suite Modal -->
+    <div id="adobeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('adobeModal')">&times;</span>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Adobe Suite Proficiency</h3>
+            <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                <li><b>Photoshop:</b> Skilled in photo editing, retouching, social media graphics, and web visuals.</li>
+                <li><b>InDesign:</b> Experienced in creating brochures, posters, packaging, and marketing layouts.</li>
+                <li><b>Premiere Pro:</b> Proficient in video editing, reels, transitions, and syncing audio for social platforms.</li>
+                <li><b>CorelDRAW:</b> Strong ability in vector graphics, print-ready designs, and branding assets.</li>
+                <li><b>Canva:</b> Quick creation of social media posts, presentations, and brand-aligned templates.</li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sketch Modal -->
+    <div id="sketchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('sketchModal')">&times;</span>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Sketch Proficiency</h3>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                <li><strong>Basic Shapes & Tools</strong>: Creating simple designs using shapes, text, and layers.</li>
+                <li><strong>Color & Styling</strong>: Applying colors, gradients, and basic effects.</li>
+                <li><strong>Simple Layouts</strong>: Making posters, banners, and basic graphics.</li>
+                <li><strong>Exporting</strong>: Saving designs in PNG, JPG, and PDF formats.</li>
+                </ul>
+        </div>
+        </div>
+
+
+    <!-- Canva Modal -->
+    <div id="canvaModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('canvaModal')">&times;</span>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Canva Proficiency</h3>
+    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+      <li><strong>Graphic Design</strong>: Creating professional posters, brochures, banners, and social media creatives.</li>
+      <li><strong>Branding</strong>: Designing brand kits, logos, and consistent visual identities.</li>
+      <li><strong>Video Editing</strong>: Editing short-form videos, adding transitions, animations, and audio for social platforms.</li>
+      <li><strong>Templates & Layouts</strong>: Customizing Canva templates to suit brand needs with polished layouts.</li>
+      <li><strong>Collaboration</strong>: Working on shared projects, team editing, and exporting files for web and print.</li>
+    </ul>
+  </div>
+</div>
+
+
+    <!-- HTML & CSS Modal -->
+    <div id="htmlcssModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('htmlcssModal')">&times;</span>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">HTML & CSS Proficiency</h3>
+            <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                <li><strong>Basic Structure</strong>: Creating simple web pages with headings, paragraphs, and images.</li>
+      <li><strong>Styling</strong>: Applying colors, fonts, and spacing using CSS.</li>
+      <li><strong>Layouts</strong>: Making basic page layouts with divs, flexbox, and simple grids.</li>
+      <li><strong>Links & Lists</strong>: Adding navigation menus, buttons, and lists.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Figma Modal -->
+    <div id="figmaModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('figmaModal')">&times;</span>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Figma Proficiency</h3>
+    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+      <li><strong>Designing</strong>: Creating simple web and mobile layouts with text, shapes, and images.</li>
+      <li><strong>Components</strong>: Using and editing basic components for consistency.</li>
+      <li><strong>Prototyping</strong>: Linking screens together to show simple user flows.</li>
+      <li><strong>Collaboration</strong>: Sharing files and working with team members in real-time.</li>
+    </ul>
+  </div>
+</div>
+
+
+    <!-- Social Media Modal -->
+    <div id="socialMediaModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('socialMediaModal')">&times;</span>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Social Media Proficiency</h3>
+    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+      <li><strong>Content Scheduling</strong>: Managing posting calendars, scheduling posts, and publishing content on time.</li>
+      <li><strong>Community Engagement</strong>: Responding to comments and messages to build audience interaction.</li>
+      <li><strong>Video & Post Management</strong>: Uploading videos and maintaining consistent brand-aligned posts.</li>
+      <li><strong>Performance Tracking</strong>: Monitoring reach, engagement, and follower growth to suggest improvements.</li>
+    </ul>
+  </div>
+</div>
+
+
+    <!-- Print Prep Modal -->
+    <div id="printPrepModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('printPrepModal')">&times;</span>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Print Preparation Proficiency</h3>
+            <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                 <li><strong>Brochures, Posters & Packaging</strong>: Designing high-quality print-ready materials.</li>
+      <li><strong>File Setup</strong>: Preparing layouts with correct bleed, margins, and print dimensions.</li>
+      <li><strong>Color Management</strong>: Working with CMYK profiles and ensuring accurate print colors.</li>
+      <li><strong>Exporting</strong>: Delivering files in print-ready formats (PDF, TIFF, EPS).</li>
+      <li><strong>Quality Check</strong>: Reviewing proofs to ensure clarity, alignment, and resolution.</li>
+    </ul>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Simple form validation
+        document.querySelector('form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if(name && email && message) {
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "flex"; // Use flex to center content
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+
+        // Close modal when clicking outside of the modal content
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+
+       document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent page reload
+    const form = e.target;
+
+    fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Thank you! Your message has been sent.");
+            form.reset(); // Reset the form fields
+        } else {
+            alert("Oops! There was a problem submitting your form.");
+        }
+    })
+    .catch(() => {
+        alert("Oops! There was a problem submitting your form.");
+    });
+});
+    </script>
+</body>
+</html>

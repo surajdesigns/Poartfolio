@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraj Designer - Full Portfolio Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Subtle background */
+        }
+
+        /* Hero Section for Gallery Page */
+        .gallery-hero {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); /* Deep purple gradient */
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotateGradient 20s linear infinite;
+        }
+        @keyframes rotateGradient {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .gallery-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        .gallery-hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Gallery Item Enhancements */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger initial shadow */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            background-color: white; /* Ensure background for overlay */
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02); /* More pronounced lift and slight scale */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25); /* Even stronger shadow on hover */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 280px; /* Slightly taller for more impact */
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            border-radius: 12px 12px 0 0; /* Rounded top corners for image */
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08); /* More zoom on hover */
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%); /* Gradient overlay */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Align content to bottom */
+            align-items: flex-start; /* Align text to left */
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            padding: 1.5rem; /* More padding */
+            text-align: left;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h3 {
+            font-size: 1.8rem; /* Larger title */
+            font-weight: 700; /* Bolder title */
+            margin-bottom: 0.5rem;
+            transform: translateY(20px); /* Initial position for animation */
+            opacity: 0;
+            transition: transform 0.4s ease 0.1s, opacity 0.4s ease 0.1s; /* Delayed animation */
+        }
+        .gallery-item:hover .gallery-overlay h3 {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-overlay p {
+            font-size: 1.1rem; /* Larger description */
+            font-weight: 400;
+            margin-bottom: 1rem;
+            transform: translateY(20px); /* Initial position for animation */
+            opacity: 0;
+            transition: transform 0.4s ease 0.15s, opacity 0.4s ease 0.15s; /* More delayed animation */
+        }
+        .gallery-item:hover .gallery-overlay p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-overlay .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            transform: translateY(20px); /* Initial position for animation */
+            opacity: 0;
+            transition: transform 0.4s ease 0.2s, opacity 0.4s ease 0.2s; /* Most delayed animation */
+        }
+        .gallery-item:hover .gallery-overlay .tags {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-overlay .tags span {
+            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white tags */
+            color: white;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px; /* Fully rounded pills */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Lightbox Modal Styles (retained and slightly enhanced) */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.95); /* Darker background */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px; /* Rounded corners for lightbox image */
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Shadow for lightbox image */
+        }
+
+        .lightbox-caption {
+            margin-top: 1.5rem; /* More space */
+            text-align: center;
+            color: #eee; /* Lighter text */
+            font-size: 1.4rem; /* Larger font */
+            font-weight: 600; /* Bolder caption */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px; /* Slightly more space from top */
+            right: 40px; /* Slightly more space from right */
+            color: #f1f1f1;
+            font-size: 45px; /* Larger close button */
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .lightbox-close:hover,
+        .lightbox-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+            transform: rotate(90deg); /* Rotate on hover */
+        }
+
+        /* Fading animation for lightbox */
+        .lightbox-modal.fade-in {
+            animation: fadeIn 0.5s forwards; /* Use forwards to keep final state */
+        }
+        .lightbox-modal.fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fadeOut {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        /* Back to Top Button */
+        #backToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed position */
+            bottom: 30px; /* Place at the bottom */
+            right: 30px; /* Place at the right */
+            z-index: 99; /* High z-index to be on top */
+            font-size: 24px; /* Large icon */
+            border: none; /* No border */
+            outline: none; /* No outline */
+            background-color: #667eea; /* Button background */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 15px 20px; /* Some padding */
+            border-radius: 50%; /* Rounded shape */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #backToTopBtn:hover {
+            background-color: #764ba2; /* Darker background on hover */
+            transform: translateY(-3px); /* Slight lift on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation for Full Portfolio Page -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-indigo-600 hover:text-indigo-800 transition">← Back to Home</a>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-gray-800">My Full Portfolio Gallery</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Hero Section -->
+    <section class="gallery-hero">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1>My Creative Universe</h1>
+            <p>A curated collection of my best graphic design, video editing, and social media work. Click on any piece to see it in detail!</p>
+        </div>
+    </section>
+
+    <!-- Full Portfolio Content Section (Gallery) -->
+    <section id="full-portfolio" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Explore My Artworks</h2>
+   
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Branding & Identity</h2>
+            
+            <!-- Branding & Identity -->
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="1-Branding Identity\logo-1.png">
+        <img src="1-Branding Identity\logo-1.png"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+    <div class="gallery-item" data-src="1-Branding Identity\logo-2.png">
+        <img src="1-Branding Identity\logo-2.png"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 3 -->
+    <div class="gallery-item" data-src="1-Branding Identity\logo-3.png">
+        <img src="1-Branding Identity\logo-3.png"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 4 -->
+    <div class="gallery-item" data-src="1-Branding Identity\logo-4.png">
+        <img src="1-Branding Identity\logo-4.png"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+</div>
+
+<br>
+
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Packaging Design</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="2-Packaging\packaging (1).jpg">
+        <img src="2-Packaging\packaging (1).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+    <div class="gallery-item" data-src="2-Packaging\packaging (2).jpg">
+        <img src="2-Packaging\packaging (2).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 3 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (3).jpg">
+        <img src="2-Packaging\packaging (3).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 4 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (4).jpg">
+        <img src="2-Packaging\packaging (4).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 5 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (5).jpg">
+        <img src="2-Packaging\packaging (5).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 6 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (17).jpg">
+        <img src="2-Packaging\packaging (17).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 7 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (7).jpg">
+        <img src="2-Packaging\packaging (7).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 8 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (8).jpg">
+        <img src="2-Packaging\packaging (8).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 9 -->
+    <div class="gallery-item" data-src="2-Packaging\packaging (9).jpg">
+        <img src="2-Packaging\packaging (9).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 10 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (10).jpg">
+        <img src="2-Packaging\packaging (10).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+</div>
+ <!-- Gallery Item 11 -->
+    <div class="gallery-item" data-src="2-Packaging\packaging (11).jpg">
+        <img src="2-Packaging\packaging (11).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 12 -->
+    <div class="gallery-item" data-src="2-Packaging\packaging (12).jpg">
+        <img src="2-Packaging\packaging (12).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 13 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (13).jpg">
+        <img src="2-Packaging\packaging (13).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 14 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (14).jpg">
+        <img src="2-Packaging\packaging (14).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 15 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (15).jpg">
+        <img src="2-Packaging\packaging (15).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+<!-- Gallery Item 16 -->
+     <div class="gallery-item" data-src="2-Packaging\packaging (16).jpg">
+        <img src="2-Packaging\packaging (16).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+</div>
+<br>
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Book Covers</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="3-Book Covers\cover (1).jpg">
+        <img src="3-Book Covers\cover (1).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+    <div class="gallery-item" data-src="3-Book Covers\cover (2).jpg">
+        <img src="3-Book Covers\cover (2).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 3 -->
+    <div class="gallery-item" data-src="3-Book Covers\cover (5).jpg">
+        <img src="3-Book Covers\cover (5).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 4 -->
+   <div class="gallery-item" data-src="3-Book Covers\cover (4).jpg">
+        <img src="3-Book Covers\cover (4).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+</div>
+
+
+<br>
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Print Design</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="4-Print\print (1).jpg">
+        <img src="4-Print\print (1).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+     <div class="gallery-item" data-src="4-Print\print (2).jpg">
+        <img src="4-Print\print (2).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 3 -->
+     <div class="gallery-item" data-src="4-Print\print (3).jpg">
+        <img src="4-Print\print (3).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 4 -->
+     <div class="gallery-item" data-src="4-Print\print (4).jpg">
+        <img src="4-Print\print (4).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    
+    <!-- Gallery Item 5 -->
+     <div class="gallery-item" data-src="4-Print\print (5).jpg">
+        <img src="4-Print\print (5).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    
+    <!-- Gallery Item 6 -->
+     <div class="gallery-item" data-src="4-Print\print (6).jpg">
+        <img src="4-Print\print (6).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+</div>
+
+<br>
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Social Media</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="5-Social Media\social (1).jpg">
+        <img src="5-Social Media\social (1).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+      <div class="gallery-item" data-src="5-Social Media\social (2).jpg">
+        <img src="5-Social Media\social (2).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 3 -->
+     <div class="gallery-item" data-src="5-Social Media\social (3).jpg">
+        <img src="5-Social Media\social (3).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 4 -->
+      <div class="gallery-item" data-src="5-Social Media\social (4).jpg">
+        <img src="5-Social Media\social (4).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    
+    <!-- Gallery Item 5 -->
+     <div class="gallery-item" data-src="5-Social Media\social (5).jpg">
+        <img src="5-Social Media\social (5).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    
+    <!-- Gallery Item 6 -->
+     <div class="gallery-item" data-src="5-Social Media\social (6).jpg">
+        <img src="5-Social Media\social (6).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+    <!-- Gallery Item 7 -->
+     <div class="gallery-item" data-src="5-Social Media\social (7).jpg">
+        <img src="5-Social Media\social (7).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+    <!-- Gallery Item 8 -->
+     <div class="gallery-item" data-src="5-Social Media\social (8).jpg">
+        <img src="5-Social Media\social (8).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+</div>
+
+<br>
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Event Posts</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="6-Event Posts\event (1).jpg">
+        <img src="6-Event Posts\event (1).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+     <div class="gallery-item" data-src="6-Event Posts\event (2).jpg">
+        <img src="6-Event Posts\event (2).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 3 -->
+     <div class="gallery-item" data-src="6-Event Posts\event (3).jpg">
+        <img src="6-Event Posts\event (3).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    <!-- Gallery Item 4 -->
+      <div class="gallery-item" data-src="6-Event Posts\event (4).jpg">
+        <img src="6-Event Posts\event (4).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    
+    <!-- Gallery Item 5 -->
+     <div class="gallery-item" data-src="6-Event Posts\event (5).jpg">
+        <img src="6-Event Posts\event (5).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    
+    <!-- Gallery Item 6 -->
+     <div class="gallery-item" data-src="6-Event Posts\event (6).jpg">
+        <img src="6-Event Posts\event (6).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+    <!-- Gallery Item 7 -->
+     <div class="gallery-item" data-src="6-Event Posts\event (7).jpg">
+        <img src="6-Event Posts\event (7).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+</div>
+
+<br>
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Website Banners</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="7-Website\web (1).jpg">
+        <img src="7-Website\web (1).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+    <!-- Gallery Item 2 -->
+     <div class="gallery-item" data-src="7-Website\web (2).jpg">
+        <img src="7-Website\web (2).jpg"
+            alt="Packaging Design for Golden Age Media"
+            style="width:100%; height:auto; border-radius:8px; display:block;" />
+    </div>
+
+
+    
+</div>
+<br>
+<!-- Packaging Design -->
+ <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Premier PRO Video Editing</h2>
+
+          <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="8-Video Editing\video (1).mp4">
+    <video controls
+        style="width:100%; height:auto; border-radius:8px; display:block;">
+        <source src="8-Video Editing\video (1).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+    <!-- Gallery Item 2 -->
+    <div class="gallery-item" data-src="8-Video Editing\video (3).mp4">
+    <video controls
+        style="width:100%; height:auto; border-radius:8px; display:block;">
+        <source src="8-Video Editing\video (3).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+</div>
+  <!-- Gallery Item 3 -->
+   <div class="gallery-item" data-src="8-Video Editing\video (4).mp4">
+    <video controls
+        style="width:100%; height:auto; border-radius:8px; display:block;">
+        <source src="8-Video Editing\video (4).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+    <!-- Gallery Item 4 -->
+    <div class="gallery-item" data-src="8-Video Editing\video (5).mp4">
+    <video controls
+        style="width:100%; height:auto; border-radius:8px; display:block;">
+        <source src="8-Video Editing\video (5).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+</div>
+            <!-- Gallery Grid -->
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; padding: 20px;">
+
+    <!-- Gallery Item 1 -->
+    <div class="gallery-item" data-src="8-Video Editing\video (2).mp4">
+    <video controls
+        style="width:200%; height:auto; border-radius:8px; display:block;">
+        <source src="8-Video Editing\video (2).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+</div>
+
+
+               
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal Structure -->
+    <div id="lightboxModal" class="lightbox-modal">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightboxImage">
+        <div id="lightboxCaption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer for Full Portfolio Page -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-xl font-bold">Suraj Kumar</span>
+                    <p class="text-gray-400 mt-2">Creating impactful visual experiences.</p>
+                   
+                </div>
+                <div class="flex space-x-6">
+                    <a href="index.html" class="text-gray-400 hover:text-white transition">Back to Home</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>Designed & Developed by Suraj Kumar</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lightbox functionality
+        const lightboxModal = document.getElementById("lightboxModal");
+        const lightboxImage = document.getElementById("lightboxImage");
+        const lightboxCaption = document.getElementById("lightboxCaption");
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.getAttribute('data-src');
+                const imgCaption = this.getAttribute('data-caption');
+                
+                lightboxModal.style.display = "flex";
+                lightboxModal.classList.remove('fade-out');
+                lightboxModal.classList.add('fade-in');
+                lightboxImage.src = imgSrc;
+                lightboxCaption.innerHTML = imgCaption;
+            });
+        });
+
+        function closeLightbox() {
+            lightboxModal.classList.remove('fade-in');
+            lightboxModal.classList.add('fade-out');
+            setTimeout(() => {
+                lightboxModal.style.display = "none";
+            }, 500); // Match animation duration
+        }
+
+        // Close lightbox when clicking outside the image
+        lightboxModal.addEventListener('click', function(event) {
+            if (event.target === lightboxModal) {
+                closeLightbox();
+            }
+        });
+
+        // Back to Top Button functionality
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        backToTopBtn.addEventListener('click', function() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        });
+    </script>
+</body>
+</html>
