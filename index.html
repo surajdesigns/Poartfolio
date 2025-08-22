@@ -55,176 +55,180 @@
             align-items: center;
         }
 
-            /* ============ Common Modal Styles (copy for each ID) ============ */
-        #adobeModal .modal-content,
-        #sketchModal .modal-content,
-        #canvaModal .modal-content,
-        #htmlcssModal .modal-content,
-        #figmaModal .modal-content,
-        #socialMediaModal .modal-content,
-        #printPrepModal .modal-content {
-            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 700px;
-            padding: 20px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-            position: relative;
-            transform: translateY(-50px);
-            transition: transform 0.4s ease;
-        }
+         /* ============ Common Modal Styles (Improved & Responsive) ============ */
+#adobeModal .modal-content,
+#sketchModal .modal-content,
+#canvaModal .modal-content,
+#htmlcssModal .modal-content,
+#figmaModal .modal-content,
+#socialMediaModal .modal-content,
+#printPrepModal .modal-content {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 16px;
+    width: 95%;
+    max-width: 700px;
+    padding: 20px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    margin: 5vh auto; /* add spacing from top */
+    max-height: 90vh; /* scroll support */
+    overflow-y: auto;
+    box-sizing: border-box;
+}
 
-        /* Close Button */
-        #adobeModal .close-button,
-        #sketchModal .close-button,
-        #canvaModal .close-button,
-        #htmlcssModal .close-button,
-        #figmaModal .close-button,
-        #socialMediaModal .close-button,
-        #printPrepModal .close-button {
-            position: relative;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: #ff4757;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        #adobeModal .close-button:hover,
-        #sketchModal .close-button:hover,
-        #canvaModal .close-button:hover,
-        #htmlcssModal .close-button:hover,
-        #figmaModal .close-button:hover,
-        #socialMediaModal .close-button:hover,
-        #printPrepModal .close-button:hover {
-            transform: scale(1.2);
-        }
+/* Close Button */
+#adobeModal .close-button,
+#sketchModal .close-button,
+#canvaModal .close-button,
+#htmlcssModal .close-button,
+#figmaModal .close-button,
+#socialMediaModal .close-button,
+#printPrepModal .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #ff4757;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+#adobeModal .close-button:hover,
+#sketchModal .close-button:hover,
+#canvaModal .close-button:hover,
+#htmlcssModal .close-button:hover,
+#figmaModal .close-button:hover,
+#socialMediaModal .close-button:hover,
+#printPrepModal .close-button:hover {
+    transform: scale(1.2);
+}
 
-        /* Headings with Gradient */
-        #adobeModal h3,
-        #sketchModal h3,
-        #canvaModal h3,
-        #htmlcssModal h3,
-        #figmaModal h3,
-        #socialMediaModal h3,
-        #printPrepModal h3 {
-            font-size: 28px;
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
-            font-weight: 700;
-            background: linear-gradient(90deg,
-                rgba(131, 58, 180, 1) 0%,
-                rgba(253, 29, 29, 1) 50%,
-                rgba(252, 176, 69, 1) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        #adobeModal h3:after,
-        #sketchModal h3:after,
-        #canvaModal h3:after,
-        #htmlcssModal h3:after,
-        #figmaModal h3:after,
-        #socialMediaModal h3:after,
-        #printPrepModal h3:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 25%;
-            width: 50%;
-            height: 3px;
-            background: linear-gradient(90deg,
-                rgba(131, 58, 180, 1) 0%,
-                rgba(253, 29, 29, 1) 50%,
-                rgba(252, 176, 69, 1) 100%);
-            border-radius: 3px;
-        }
+/* Headings with Gradient */
+#adobeModal h3,
+#sketchModal h3,
+#canvaModal h3,
+#htmlcssModal h3,
+#figmaModal h3,
+#socialMediaModal h3,
+#printPrepModal h3 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+    font-weight: 700;
+    background: linear-gradient(90deg,
+        rgba(131, 58, 180, 1) 0%,
+        rgba(253, 29, 29, 1) 50%,
+        rgba(252, 176, 69, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#adobeModal h3:after,
+#sketchModal h3:after,
+#canvaModal h3:after,
+#htmlcssModal h3:after,
+#figmaModal h3:after,
+#socialMediaModal h3:after,
+#printPrepModal h3:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(90deg,
+        rgba(131, 58, 180, 1) 0%,
+        rgba(253, 29, 29, 1) 50%,
+        rgba(252, 176, 69, 1) 100%);
+    border-radius: 3px;
+}
 
-        /* UL Styling */
-        #adobeModal ul,
-        #sketchModal ul,
-        #canvaModal ul,
-        #htmlcssModal ul,
-        #figmaModal ul,
-        #socialMediaModal ul,
-        #printPrepModal ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+/* UL Styling */
+#adobeModal ul,
+#sketchModal ul,
+#canvaModal ul,
+#htmlcssModal ul,
+#figmaModal ul,
+#socialMediaModal ul,
+#printPrepModal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        /* LI Styling */
-        #adobeModal li,
-        #sketchModal li,
-        #canvaModal li,
-        #htmlcssModal li,
-        #figmaModal li,
-        #socialMediaModal li,
-        #printPrepModal li {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            border-left: 4px solid #ff4757;
-        }
-        #adobeModal li:hover,
-        #sketchModal li:hover,
-        #canvaModal li:hover,
-        #htmlcssModal li:hover,
-        #figmaModal li:hover,
-        #socialMediaModal li:hover,
-        #printPrepModal li:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        }
-        #adobeModal li b,
-        #sketchModal li b,
-        #canvaModal li b,
-        #htmlcssModal li b,
-        #figmaModal li b,
-        #socialMediaModal li b,
-        #printPrepModal li b {
-            font-weight: 600;
-            color: #2f3640;
-            margin-right: 5px;
-            min-width: 100px;
-            display: inline-block;
-        }
+/* LI Styling */
+#adobeModal li,
+#sketchModal li,
+#canvaModal li,
+#htmlcssModal li,
+#figmaModal li,
+#socialMediaModal li,
+#printPrepModal li {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    border-left: 4px solid #ff4757;
+    word-break: break-word; /* avoid text overflow */
+    flex-wrap: wrap;
+}
+#adobeModal li:hover,
+#sketchModal li:hover,
+#canvaModal li:hover,
+#htmlcssModal li:hover,
+#figmaModal li:hover,
+#socialMediaModal li:hover,
+#printPrepModal li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+#adobeModal li b,
+#sketchModal li b,
+#canvaModal li b,
+#htmlcssModal li b,
+#figmaModal li b,
+#socialMediaModal li b,
+#printPrepModal li b {
+    font-weight: 600;
+    color: #2f3640;
+    margin-right: 5px;
+    min-width: 100px;
+    display: inline-block;
+    flex-shrink: 0;
+}
 
-        /* Alternate Border Colors */
-        #adobeModal li:nth-child(even),
-        #sketchModal li:nth-child(even),
-        #canvaModal li:nth-child(even),
-        #htmlcssModal li:nth-child(even),
-        #figmaModal li:nth-child(even),
-        #socialMediaModal li:nth-child(even),
-        #printPrepModal li:nth-child(even) {
-            border-left-color: #3742fa;
-        }
-        #adobeModal li:nth-child(3n),
-        #sketchModal li:nth-child(3n),
-        #canvaModal li:nth-child(3n),
-        #htmlcssModal li:nth-child(3n),
-        #figmaModal li:nth-child(3n),
-        #socialMediaModal li:nth-child(3n),
-        #printPrepModal li:nth-child(3n) {
-            border-left-color: #1dd1a1;
-        }
-        #adobeModal li:nth-child(4n),
-        #sketchModal li:nth-child(4n),
-        #canvaModal li:nth-child(4n),
-        #htmlcssModal li:nth-child(4n),
-        #figmaModal li:nth-child(4n),
-        #socialMediaModal li:nth-child(4n),
-        #printPrepModal li:nth-child(4n) {
-            border-left-color: #ffa502;
-        }
-
+/* Alternate Border Colors */
+#adobeModal li:nth-child(even),
+#sketchModal li:nth-child(even),
+#canvaModal li:nth-child(even),
+#htmlcssModal li:nth-child(even),
+#figmaModal li:nth-child(even),
+#socialMediaModal li:nth-child(even),
+#printPrepModal li:nth-child(even) {
+    border-left-color: #3742fa;
+}
+#adobeModal li:nth-child(3n),
+#sketchModal li:nth-child(3n),
+#canvaModal li:nth-child(3n),
+#htmlcssModal li:nth-child(3n),
+#figmaModal li:nth-child(3n),
+#socialMediaModal li:nth-child(3n),
+#printPrepModal li:nth-child(3n) {
+    border-left-color: #1dd1a1;
+}
+#adobeModal li:nth-child(4n),
+#sketchModal li:nth-child(4n),
+#canvaModal li:nth-child(4n),
+#htmlcssModal li:nth-child(4n),
+#figmaModal li:nth-child(4n),
+#socialMediaModal li:nth-child(4n),
+#printPrepModal li:nth-child(4n) {
+    border-left-color: #ffa502;
+}
 
 
         /* Add Animation */
